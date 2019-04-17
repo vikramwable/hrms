@@ -1,4 +1,4 @@
-package com.hendisantika.example.config;
+package org.webshar.hrms.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -14,38 +14,41 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-class SecurityConfig extends WebSecurityConfigurerAdapter {
+class SecurityConfig extends WebSecurityConfigurerAdapter
+{
 
   @Autowired
   private UserDetailsService userDetailsService;
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  protected void configure(HttpSecurity http) throws Exception
+  {
     http.authorizeRequests()
-      .antMatchers("/", "/public/**").permitAll()
-      .antMatchers("/users/**").hasAuthority("ADMIN")
-      .anyRequest().fullyAuthenticated()
-      .and()
-      .formLogin()
-      .loginPage("/login")
-      .failureUrl("/login?error")
-      .usernameParameter("email")
-      .permitAll()
-      .and()
-      .logout()
-      .logoutUrl("/logout")
-      .deleteCookies("remember-me")
-      .logoutSuccessUrl("/")
-      .permitAll()
-      .and()
-      .rememberMe();
+        .antMatchers("/", "/public/**").permitAll()
+        .antMatchers("/users/**").hasAuthority("ADMIN")
+        .anyRequest().fullyAuthenticated()
+        .and()
+        .formLogin()
+        .loginPage("/login")
+        .failureUrl("/login?error")
+        .usernameParameter("email")
+        .permitAll()
+        .and()
+        .logout()
+        .logoutUrl("/logout")
+        .deleteCookies("remember-me")
+        .logoutSuccessUrl("/")
+        .permitAll()
+        .and()
+        .rememberMe();
   }
 
   @Override
-  public void configure(AuthenticationManagerBuilder auth) throws Exception {
+  public void configure(AuthenticationManagerBuilder auth) throws Exception
+  {
     auth
-      .userDetailsService(userDetailsService)
-      .passwordEncoder(new BCryptPasswordEncoder());
+        .userDetailsService(userDetailsService)
+        .passwordEncoder(new BCryptPasswordEncoder());
   }
 
 }

@@ -1,12 +1,12 @@
-package com.hendisantika.example.service.user;
+package org.webshar.hrms.service.user;
 
-import com.hendisantika.example.domain.User;
-import com.hendisantika.example.domain.UserCreateForm;
-
+import org.webshar.hrms.domain.User;
+import org.webshar.hrms.domain.UserCreateForm;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface UserService {
+public interface UserService
+{
 
   Optional<User> getUserById(long id);
 

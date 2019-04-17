@@ -1,8 +1,10 @@
-package com.hendisantika.example.service.user;
+package org.webshar.hrms.service.user;
 
-import com.hendisantika.example.domain.User;
-import com.hendisantika.example.domain.UserCreateForm;
-import com.hendisantika.example.repository.UserRepository;
+import org.webshar.hrms.domain.User;
+import org.webshar.hrms.domain.UserCreateForm;
+import org.webshar.hrms.repository.UserRepository;
+import java.util.Collection;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,40 +12,43 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Optional;
-
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService
+{
 
   private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
   private final UserRepository userRepository;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository) {
+  public UserServiceImpl(UserRepository userRepository)
+  {
     this.userRepository = userRepository;
   }
 
   @Override
-  public Optional<User> getUserById(long id) {
+  public Optional<User> getUserById(long id)
+  {
     LOGGER.debug("Getting user={}", id);
     return Optional.ofNullable(userRepository.findOne(id));
   }
 
   @Override
-  public Optional<User> getUserByEmail(String email) {
+  public Optional<User> getUserByEmail(String email)
+  {
     LOGGER.debug("Getting user by email={}", email.replaceFirst("@.*", "@***"));
     return userRepository.findOneByEmail(email);
   }
 
   @Override
-  public Collection<User> getAllUsers() {
+  public Collection<User> getAllUsers()
+  {
     LOGGER.debug("Getting all users");
     return userRepository.findAll(new Sort("email"));
   }
 
   @Override
-  public User create(UserCreateForm form) {
+  public User create(UserCreateForm form)
+  {
     User user = new User();
     user.setEmail(form.getEmail());
     user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
